@@ -23,7 +23,7 @@ scale:
   min: 1
 external_routes:
   - name: nessus
-    target_port: 8834
+    target_port: 443
     redirect_http_to_https: true
     ip_white_list:
       - 0.0.0.0/0

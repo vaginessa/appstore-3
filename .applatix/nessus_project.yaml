@@ -1,7 +1,7 @@
 ---
 type: project
 name: Nessus
-description: This is the workflow to deploy Nessus container.
+description: This is the workflow to deploy Nessus vulnerability scanner container.
 actions:
   -
     name: run
