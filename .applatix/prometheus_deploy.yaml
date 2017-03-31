@@ -38,7 +38,7 @@ containers:
 
 ---
 type: workflow
-name: Deploy prometheus
+name: Deploy Prometheus
 description: This is the workflow to deploy prometheus graphana.
 inputs:
   parameters:
