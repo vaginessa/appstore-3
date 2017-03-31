@@ -10,7 +10,55 @@ container:
   docker_options: 
   command:
 
+---
+type: container
+name: alertmanager
+description: Alertmanager container
+container:
+  image: "prom/alertmanager"
+  resources:
+    mem_mib: 2048
+    cpu_cores: 0.8
+  docker_options: 
+  command:
 
+---
+type: container
+name: nodeexporter
+description: nodeexporter container
+container:
+  image: "prom/node-exporter"
+  resources:
+    mem_mib: 2048
+    cpu_cores: 0.8
+  docker_options: 
+  command:
+
+---
+type: container
+name: cadvisor
+description: cadvisor container
+container:
+  image: "google/cadvisor:v0.24.1"
+  resources:
+    mem_mib: 2048
+    cpu_cores: 0.8
+  docker_options: 
+  command:
+
+  ---
+type: container
+name: grafana
+description: grafana container
+container:
+  image: "grafana/grafana"
+  resources:
+    mem_mib: 2048
+    cpu_cores: 0.8
+  docker_options: 
+  command:
+  
+  
 ---
 type: deployment
 name: deploy-prometheus
@@ -37,6 +85,107 @@ containers:
         PROBE_CMD:
 
 ---
+type: deployment
+name: deploy-alertmanager
+inputs:
+  parameters:
+    appname:
+      default: "prometheus-app"
+application:
+  name: "%%appname%%"
+deployment:
+  name: "run-alertmanager-deploy"
+scale:
+  min: 1
+external_routes:
+  - name: prometheus
+    target_port: 9093
+    redirect_http_to_https: true
+    ip_white_list:
+      - 0.0.0.0/0
+containers:
+  - server:
+      template: alertmanager
+      parameters:
+        PROBE_CMD:
+
+---
+type: deployment
+name: deploy-nodeexporter
+inputs:
+  parameters:
+    appname:
+      default: "prometheus-app"
+application:
+  name: "%%appname%%"
+deployment:
+  name: "run-nodeexporter-deploy"
+scale:
+  min: 1
+external_routes:
+  - name: prometheus
+    target_port: 9100
+    redirect_http_to_https: true
+    ip_white_list:
+      - 0.0.0.0/0
+containers:
+  - server:
+      template: nodeexporter
+      parameters:
+        PROBE_CMD:
+
+---
+type: deployment
+name: deploy-cadvisor
+inputs:
+  parameters:
+    appname:
+      default: "prometheus-app"
+application:
+  name: "%%appname%%"
+deployment:
+  name: "run-cadvisor-deploy"
+scale:
+  min: 1
+external_routes:
+  - name: prometheus
+    target_port: 8080
+    redirect_http_to_https: true
+    ip_white_list:
+      - 0.0.0.0/0
+containers:
+  - server:
+      template: cadvisor
+      parameters:
+        PROBE_CMD:
+
+---
+type: deployment
+name: deploy-grafana
+inputs:
+  parameters:
+    appname:
+      default: "prometheus-app"
+application:
+  name: "%%appname%%"
+deployment:
+  name: "run-grafana-deploy"
+scale:
+  min: 1
+external_routes:
+  - name: prometheus
+    target_port: 3000
+    redirect_http_to_https: true
+    ip_white_list:
+      - 0.0.0.0/0
+containers:
+  - server:
+      template: grafana
+      parameters:
+        PROBE_CMD:
+
+
+---
 type: workflow
 name: Deploy Prometheus
 description: This is the workflow to deploy prometheus graphana.
@@ -47,3 +196,11 @@ inputs:
 steps:
   - deploy-prometheus:
       template: deploy-prometheus
+  - deploy-alertmanager:
+      template: deploy-alertmanager
+  - deploy-nodeexporter:
+      template: deploy-nodeexporter
+  - deploy-cadvisor:
+      template: deploy-cadvisor
+  - deploy-grafana:
+      template: deploy-grafana
