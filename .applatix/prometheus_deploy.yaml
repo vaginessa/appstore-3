@@ -45,5 +45,5 @@ inputs:
     appname:
       default: "prometheus-app"
 steps:
-  - deploy-nessus:
+  - deploy-prometheus:
       template: deploy-prometheus
