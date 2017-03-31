@@ -1,0 +1,49 @@
+---
+type: container
+name: prometheus
+description: Prometheus container
+container:
+  image: "prom/prometheus"
+  resources:
+    mem_mib: 2048
+    cpu_cores: 0.8
+  docker_options: 
+  command:
+
+
+---
+type: deployment
+name: deploy-prometheus
+inputs:
+  parameters:
+    appname:
+      default: "prometheus-app"
+application:
+  name: "%%appname%%"
+deployment:
+  name: "run-prometheus-deploy"
+scale:
+  min: 1
+external_routes:
+  - name: prometheus
+    target_port: 9090
+    redirect_http_to_https: true
+    ip_white_list:
+      - 0.0.0.0/0
+containers:
+  - server:
+      template: prometheus
+      parameters:
+        PROBE_CMD:
+
+---
+type: workflow
+name: Deploy prometheus
+description: This is the workflow to deploy prometheus graphana.
+inputs:
+  parameters:
+    appname:
+      default: "prometheus-app"
+steps:
+  - deploy-nessus:
+      template: deploy-prometheus

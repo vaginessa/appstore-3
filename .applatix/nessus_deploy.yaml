@@ -23,7 +23,6 @@ scale:
   min: 1
 external_routes:
   - name: nessus
-    port: 8834
     target_port: 8834
     redirect_http_to_https: true
     ip_white_list:
@@ -32,7 +31,6 @@ containers:
   - server:
       template: nessus
       parameters:
-        PROBE_CMD:
 
 ---
 type: workflow

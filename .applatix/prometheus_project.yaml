@@ -1,0 +1,19 @@
+---
+type: project
+name: Prometheus_Graphana
+description: This is the workflow to deploy Prometheus with Graphana as container.
+actions:
+  -
+    name: run
+    template: Deploy Prometheus
+categories: ["monitoring", "promoted"]
+publish:
+  branches:
+    - master
+labels:
+    tags: "[\"monitoring\"]"
+    publisher: Applatix
+assets:
+    icon: "/prometheus/prometheus.png"
+    publisher_icon: "/prometheus/AX_Pub.png"
+    detail: "/prometheus/README.md"
