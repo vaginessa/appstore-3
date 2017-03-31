@@ -98,7 +98,7 @@ deployment:
 scale:
   min: 1
 external_routes:
-  - name: prometheus
+  - name: alertmanager
     target_port: 9093
     redirect_http_to_https: true
     ip_white_list:
@@ -123,7 +123,7 @@ deployment:
 scale:
   min: 1
 external_routes:
-  - name: prometheus
+  - name: nodeexporter
     target_port: 9100
     redirect_http_to_https: true
     ip_white_list:
@@ -148,7 +148,7 @@ deployment:
 scale:
   min: 1
 external_routes:
-  - name: prometheus
+  - name: cadvisor
     target_port: 8080
     redirect_http_to_https: true
     ip_white_list:
@@ -173,7 +173,7 @@ deployment:
 scale:
   min: 1
 external_routes:
-  - name: prometheus
+  - name: grafana
     target_port: 3000
     redirect_http_to_https: true
     ip_white_list:
