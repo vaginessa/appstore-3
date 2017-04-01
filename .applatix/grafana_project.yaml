@@ -1,7 +1,7 @@
 ---
 type: project
-name: Grapfana 
-description: This is the workflow to deploy Grafana as container.
+name: Grafana 
+description: Deploy Grafana for monitoring
 actions:
   -
     name: run
