@@ -5,7 +5,7 @@ description: This is the workflow to deploy Grafana as container.
 actions:
   -
     name: run
-    template: Deploy Prometheus
+    template: Deploy Grafana
 categories: ["monitoring", "promoted"]
 publish:
   branches:
