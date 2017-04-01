@@ -1,9 +1,0 @@
-## Prometheus 
-
-#### Synopsis
-
-
-
-#### Configuration
-
-
