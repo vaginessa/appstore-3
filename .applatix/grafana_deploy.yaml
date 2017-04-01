@@ -1,14 +1,3 @@
----
-type: container
-name: prometheus
-description: Prometheus container
-container:
-  image: "prom/prometheus"
-  resources:
-    mem_mib: 2048
-    cpu_cores: 0.8
-  docker_options: 
-  command:
 
 ---
 type: container
@@ -58,39 +47,13 @@ container:
   docker_options: 
   command:
   
-  
----
-type: deployment
-name: deploy-prometheus
-inputs:
-  parameters:
-    appname:
-      default: "prometheus-app"
-application:
-  name: "%%appname%%"
-deployment:
-  name: "run-prometheus-deploy"
-scale:
-  min: 1
-external_routes:
-  - name: prometheus
-    target_port: 9090
-    redirect_http_to_https: true
-    ip_white_list:
-      - 0.0.0.0/0
-containers:
-  - server:
-      template: prometheus
-      parameters:
-        PROBE_CMD:
-
 ---
 type: deployment
 name: deploy-alertmanager
 inputs:
   parameters:
     appname:
-      default: "prometheus-app"
+      default: "grafana-app"
 application:
   name: "%%appname%%"
 deployment:
@@ -115,7 +78,7 @@ name: deploy-nodeexporter
 inputs:
   parameters:
     appname:
-      default: "prometheus-app"
+      default: "grafana-app"
 application:
   name: "%%appname%%"
 deployment:
@@ -140,7 +103,7 @@ name: deploy-cadvisor
 inputs:
   parameters:
     appname:
-      default: "prometheus-app"
+      default: "grafana-app"
 application:
   name: "%%appname%%"
 deployment:
@@ -165,7 +128,7 @@ name: deploy-grafana
 inputs:
   parameters:
     appname:
-      default: "prometheus-app"
+      default: "grafana-app"
 application:
   name: "%%appname%%"
 deployment:
@@ -187,15 +150,13 @@ containers:
 
 ---
 type: workflow
-name: Deploy Prometheus
-description: This is the workflow to deploy prometheus graphana.
+name: Deploy Grafana
+description: This is the workflow to deploy Graphana.
 inputs:
   parameters:
     appname:
-      default: "prometheus-app"
+      default: "grafana-app"
 steps:
-  - deploy-prometheus:
-      template: deploy-prometheus
   - deploy-alertmanager:
       template: deploy-alertmanager
   - deploy-nodeexporter:
