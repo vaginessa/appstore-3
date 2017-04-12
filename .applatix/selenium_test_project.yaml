@@ -1,16 +1,11 @@
 ---
 type: project
-name: Selenium
-description: Portable software-testing framework for web applications.
+name: Selenium testing
+description: Example workflow launching selenium tests.
 actions:
   -
-    name: test all
-    template: Selenium Standalone Test All AX Images
-    parameters:
-            repo: "https://github.com/Applatix/appstore.git"
-  -
-    name: test one
-    template: Selenium Standalone Test One AX
+    name: test
+    template: selenium-example-workflow
 categories: ["devops", "promoted"]
 publish:
   branches:
