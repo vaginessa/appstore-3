@@ -30,4 +30,7 @@ def test_page_title_fail(driver):
     driver.get(os.environ['APP_URL'])
     logger.info('Test page title')
     time.sleep(5)
-    assert 'Error' in driver.title
+    if os.environ['TEST_FAILURE'] == 'true':
+        assert 'Error' in driver.title
+    else:
+        assert 'Example' in driver.title
